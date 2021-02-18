@@ -1,0 +1,827 @@
+<!doctype html>
+<html lang="en">
+  <head>
+
+	  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+	  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+	  <meta name="description" content="">
+	  <meta name="author" content="">
+	  
+   
+      <meta name="author" content="Mark Otto, Jacob Thornton, and Bootstrap contributors">
+      <meta name="generator" content="Hugo 0.80.0">
+      <title>RBAC System</title>
+
+    <link rel="canonical" href="https://getbootstrap.com/docs/4.6/examples/dashboard/">
+
+    
+
+    <!-- Bootstrap core CSS -->
+<link href="../assets/dist/css/bootstrap.min.css" rel="stylesheet">
+
+
+
+    <style>
+      .bd-placeholder-img {
+        font-size: 1.125rem;
+        text-anchor: middle;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+      }
+
+      @media (min-width: 768px) {
+        .bd-placeholder-img-lg {
+          font-size: 3.5rem;
+        }
+      }
+    </style>
+
+    
+    <!-- Custom styles for this template -->
+    <link href="dashboard.css" rel="stylesheet">
+	<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js" integrity="sha384-9/reFTGAW83EW2RDu2S0VKaIzap3H66lZH81PoYlFhbGU+6BZp6G7niu735Sk7lN" crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.min.js" integrity="sha384-gRC4eoaRyQ8xv2X6Mnf+eOIrtON3wId3dAkwO0HQX26OrFBoLpjX/XWOJacSiZhL" crossorigin="anonymous"></script>
+	<script>
+		// var UserInfomation=[{1,'张三','男','2009-05-20',''},{2,'张四','男','2001-12-12',''},{3,'张五','男','1999-01-17',''},
+		// 			  {4,'缙云','女','1999-02-25',''},{5,'李斯','男','2012-06-06',''}];
+		
+		function Welcome(){
+			document.getElementById("User").style.display="none";
+			document.getElementById("welcome").style.display="";
+			document.getElementById("Role").style.display="none";
+			document.getElementById("Permission").style.display="none";
+		}
+		
+		function UserList(){
+			document.getElementById("title").innerText="用户列表";
+			document.getElementById("User").style.display="";
+			document.getElementById("welcome").style.display="none";
+			document.getElementById("Role").style.display="none";
+			document.getElementById("Permission").style.display="none";
+			
+			
+		};
+		
+		function RoleList(){
+			console.log(12)
+			document.getElementById("User").style.display="none";
+			document.getElementById("welcome").style.display="none";
+			document.getElementById("Permission").style.display="none";
+			document.getElementById("Role").style.display="";
+			document.getElementById("Role_Title").innerText="角色列表";
+		};
+		
+		function PermissionList(){
+			document.getElementById("User").style.display="none";
+			document.getElementById("welcome").style.display="none";
+			document.getElementById("Role").style.display="none";
+			document.getElementById("Permission_Title").innerText="权限列表";
+			document.getElementById("Permission").style.display="";
+		}
+		
+	</script>
+  </head>
+  <body>
+    
+<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0 shadow">
+  <a class="navbar-brand col-md-3 col-lg-2 mr-0 px-3" href="#">RBAC</a>
+  <button class="navbar-toggler position-absolute d-md-none collapsed" type="button" data-toggle="collapse" data-target="#sidebarMenu" aria-controls="sidebarMenu" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+  <ul class="navbar-nav px-3">
+    <li class="nav-item text-nowrap">
+      <a class="nav-link" href="login.html">Sign out</a>
+    </li>
+  </ul>
+</nav>
+
+<div class="container-fluid">
+  <div class="row">
+    <nav id="sidebarMenu" class="col-md-3 col-lg-2 d-md-block bg-light sidebar collapse">
+      <div class="sidebar-sticky pt-3">
+        <ul class="nav flex-column">
+          <li class="nav-item">
+            <a class="nav-link active" href="#" onclick="Welcome()">
+              <span data-feather="home"></span>
+              主界面 
+            </a>
+          </li>
+        </ul>
+		
+		
+		<div class="accordion" id="accordionExample">
+		  <div class="card">
+		    <div class="card-header" id="headingOne"  data-toggle="collapse" data-target="#collapseOne" aria-expanded="false" aria-controls="collapseOne">
+				<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+				  <span>用户管理</span>
+				  <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+				    <span data-feather="plus-circle"></span>
+				  </a>
+				</h6>
+		    </div>
+		
+		    <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
+		      <div class="card-body">
+		        <ul class="nav flex-column mb-2">
+		        	 <li class="nav-item" >
+		        	   <a class="nav-link" href="#" onclick="UserList()">
+		        		 <span data-feather="users"></span>
+		        		 用户列表
+		        	   </a>
+		        	 </li>
+		          <li class="nav-item">
+		            <a class="nav-link" href="#" data-toggle="modal" data-target="#User_Add">
+		              <span data-feather="user-plus"></span>
+		              添加用户
+		            </a>
+		          </li>
+		        </ul>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" id="headingTwo" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+				<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted" >
+				  <span>角色管理</span>
+				  <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+				    <span data-feather="plus-circle"></span>
+				  </a>
+				</h6>
+		    </div>
+		    <div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+		      <div class="card-body">
+		        <ul class="nav flex-column mb-2">
+		          <li class="nav-item">
+		            <a class="nav-link" href="#" onclick="RoleList()">
+		              <span  data-feather="users"></span>
+		              角色列表
+		            </a>
+		          </li>
+		          <li class="nav-item">
+		            <a class="nav-link" href="#" data-toggle="modal" data-target="#Role_Add">
+		              <span data-feather="user-plus"></span>
+		              添加角色
+		            </a>
+		          </li>
+		        </ul>
+		      </div>
+		    </div>
+		  </div>
+		  <div class="card">
+		    <div class="card-header" id="headingThree"  data-toggle="collapse" data-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">		      
+				<h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+				  <span>权限管理</span>
+				  <a class="d-flex align-items-center text-muted" href="#" aria-label="Add a new report">
+				    <span data-feather="plus-circle"></span>
+				  </a>
+				</h6>
+		    </div>
+		    <div id="collapseThree" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+		      <div class="card-body">
+		        <ul class="nav flex-column mb-2">
+		          <li class="nav-item">
+		            <a class="nav-link" href="#" onclick="PermissionList()">
+		              <span data-feather="file-text"></span>
+		              权限列表
+		            </a>
+		          </li>
+		          <li class="nav-item">
+		            <a class="nav-link" href="#" data-toggle="modal" data-target="#Permission_Add">
+		              <span data-feather="plus-circle"></span>
+		              添加权限
+		            </a>
+		          </li>
+		        </ul>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		
+    </nav>
+
+	<main role="main" class="col-md-9 ml-sm-auto col-lg-10 px-md-4">
+		
+		<div class="starter-template" style="text-align: center;margin-top: 200px;" id="welcome">
+		  <h1>Welcome To RBAC System!</h1>
+		  <p class="lead">Use this system for user management and permissions.<br>It can quickly improve the arrangement and view of various permissions.</p>
+		</div>
+		
+		<div style="display: none;" id="User">
+			<h2 id="title">Section title</h2>
+			<div class="table-responsive">
+						<table class="table table-striped table-sm">
+						  <thead>
+							<tr>
+							  <th id="xuhao_col">序号</th>
+							  <th id="name_col">用户名</th>
+							  <th id="sex_col">性别</th>
+							  <th id="birth_col">出生日期</th>
+							  <th id="role_col">用户角色</th>
+							  <th id="operate_col" style="width: 199.6px;">操作</th>
+							</tr>
+						  </thead>
+						  <tbody id="table">
+							  <tr>
+								  <td>1</td>
+								  <td>random</td>
+								  <td>男</td>
+								  <td>2020/01/01</td>
+								  <td>角色1</td>
+								  <td>
+									  <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#User_Assign_Role" >分配角色</button>&nbsp;<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#User_Edit">编辑</button>
+									  &nbsp;<button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+								  </td>
+							  </tr>
+							  <tr>
+								  <td>2</td>
+								  <td>random</td>
+								  <td>男</td>
+								  <td>2020/01/01</td>
+								  <td>角色1</td>
+								  <td>
+									  <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#User_Assign_Role" >分配角色</button>&nbsp;<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#User_Edit">编辑</button>
+									  &nbsp;<button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+								  </td>
+							  </tr>
+							  <tr>
+								  <td>3</td>
+								  <td>random</td>
+								  <td>男</td>
+								  <td>2020/01/01</td>
+								  <td>角色1</td>
+								  <td>
+									  <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#User_Assign_Role" >分配角色</button>&nbsp;<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#User_Edit">编辑</button>
+									  &nbsp;<button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+								  </td>
+							  </tr>
+							  <tr>
+								  <td>4</td>
+								  <td>random</td>
+								  <td>男</td>
+								  <td>2020/01/01</td>
+								  <td>角色1</td>
+								  <td>
+									  <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#User_Assign_Role" >分配角色</button>&nbsp;<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#User_Edit">编辑</button>
+									  &nbsp;<button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+								  </td>
+							  </tr>
+							  <tr>
+								  <td>5</td>
+								  <td>random</td>
+								  <td>男</td>
+								  <td>2020/01/01</td>
+								  <td>角色1</td>
+								  <td>
+									  <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#User_Assign_Role" >分配角色</button>&nbsp;<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#User_Edit">编辑</button>
+									  &nbsp;<button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+								  </td>
+							  </tr>
+							  <tr>
+								  <td>6</td>
+								  <td>random</td>
+								  <td>男</td>
+								  <td>2020/01/01</td>
+								  <td>角色1</td>
+								  <td>
+									  <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#User_Assign_Role" >分配角色</button>&nbsp;<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#User_Edit">编辑</button>
+									  &nbsp;<button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+								  </td>
+							  </tr>
+							  <tr>
+								  <td>7</td>
+								  <td>random</td>
+								  <td>男</td>
+								  <td>2020/01/01</td>
+								  <td>角色1</td>
+								  <td>
+									  <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#User_Assign_Role" >分配角色</button>&nbsp;<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#User_Edit">编辑</button>
+									  &nbsp;<button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+								  </td>
+							  </tr>
+						  </tbody>
+						</table>
+						<div style="float: right;margin-right: 50px;" id="crud"> 
+							<nav aria-label="Page navigation example">
+							  <ul class="pagination">
+								<li class="page-item">
+								  <a class="page-link" href="#" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+								  </a>
+								</li>
+								<li class="page-item"><a class="page-link" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item">
+								  <a class="page-link" href="#" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								  </a>
+								</li>
+							  </ul>
+							</nav>
+						</div>		
+			</div>
+		</div> 
+		
+		<div style="display: none;" id="Role">
+			<h2 id="Role_Title"></h2>
+			<div class="table-responsive">
+				<!-- RoleList数据模块 -->
+				<table class="table table-striped table-sm">
+				  <thead>
+					<tr>
+					  <th id="Role_Id">ID</th>
+					  <th id="Role_Name">角色名称</th>
+					  <th id="Role_Permissions">角色权限</th>
+					  <th id="Role_Remarks">备注</th>
+					  <th id="operate_col" style="width: 199.6px;">操作</th>
+					</tr>
+				  </thead>
+				  <tbody>
+					  <tr>
+						  <td>1</td>
+						  <td>角色1</td>
+						  <td>权限1</td>
+						  <td>角色内容描述</td>
+						  <td>
+							  <button type="button" class="btn btn-outline-primary btn-sm" data-toggle="modal" data-target="#Role_Modify_Permissions">修改权限</button>&nbsp;<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#Role_Edit">编辑</button>
+							  &nbsp;<button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+						  </td>
+					  </tr>
+					  <tr>
+						  <td>2</td>
+						  <td>角色2</td>
+						  <td>权限2</td>
+						  <td>角色内容描述</td>
+						  <td>
+							  <button type="button" class="btn btn-outline-primary btn-sm"  data-toggle="modal" data-target="#Role_Modify_Permissions">修改权限</button>&nbsp;<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#Role_Edit">编辑</button>
+							  &nbsp;<button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+						  </td>
+					  </tr>
+					  <tr>
+						  <td>3</td>
+						  <td>角色3</td>
+						  <td>权限3</td>
+						  <td>角色内容描述</td>
+						  <td>
+							  <button type="button" class="btn btn-outline-primary btn-sm"  data-toggle="modal" data-target="#Role_Modify_Permissions">修改权限</button>&nbsp;<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#Role_Edit">编辑</button>
+							  &nbsp;<button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+						  </td>
+					  </tr>
+					  <tr>
+						  <td>4</td>
+						  <td>角色4</td>
+						  <td>权限4</td>
+						  <td>角色内容描述</td>
+						  <td>
+							  <button type="button" class="btn btn-outline-primary btn-sm"  data-toggle="modal" data-target="#Role_Modify_Permissions">修改权限</button>&nbsp;<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#Role_Edit">编辑</button>
+							  &nbsp;<button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+						  </td>
+					  </tr>
+					  <tr>
+						  <td>5</td>
+						  <td>角色5</td>
+						  <td>权限5</td>
+						  <td>角色内容描述</td>
+						  <td>
+							  <button type="button" class="btn btn-outline-primary btn-sm"  data-toggle="modal" data-target="#Role_Modify_Permissions">修改权限</button>&nbsp;<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#Role_Edit">编辑</button>
+							  &nbsp;<button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+						  </td>
+					  </tr>
+					  <tr>
+						  <td>6</td>
+						  <td>角色6</td>
+						  <td>权限6</td>
+						  <td>角色内容描述</td>
+						  <td>
+							  <button type="button" class="btn btn-outline-primary btn-sm"  data-toggle="modal" data-target="#Role_Modify_Permissions">修改权限</button>&nbsp;<button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#Role_Edit">编辑</button>
+							  &nbsp;<button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+						  </td>
+					  </tr>
+					  
+				  </tbody>
+				</table>
+				
+				<!-- 分页模块nav -->
+				<div style="float: right;margin-right: 50px;" id="crud"> 
+					<nav aria-label="Page navigation example">
+					  <ul class="pagination">
+						<li class="page-item">
+						  <a class="page-link" href="#" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+						  </a>
+						</li>
+						<li class="page-item"><a class="page-link" href="#">1</a></li>
+						<li class="page-item"><a class="page-link" href="#">2</a></li>
+						<li class="page-item"><a class="page-link" href="#">3</a></li>
+						<li class="page-item">
+						  <a class="page-link" href="#" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						  </a>
+						</li>
+					  </ul>
+					</nav>
+				</div>		
+			</div>
+		</div> 
+		
+		<div style="display: none;" id="Permission">
+			<h2 id="Permission_Title">Section title</h2>
+			<div class="table-responsive">
+						<!-- 权限列表数据模块 -->
+						<table class="table table-striped table-sm">
+						  <thead>
+							<tr>
+							  <th id="Permission_Id">ID</th>
+							  <th id="Permission_Name">权限名称</th>
+							  <th id="Permission_Remarks">权限描述</th>
+							  <th id="operate_col" style="width: 199.6px;">操作</th>
+							</tr>
+						  </thead>
+						  <tbody>
+							  <tr>
+								  <td>1</td>
+								  <td>权限1</td>
+								  <td>权限1内容描述</td>
+								  <td>
+									 <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#Permission_Edit">编辑</button>
+									  &nbsp;<button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+								  </td>
+							  </tr>
+							  <tr>
+								  <td>2</td>
+								  <td>权限2</td>
+								  <td>权限2内容描述</td>
+								  <td>
+									  <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#Permission_Edit">编辑</button>
+									  &nbsp;<button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+								  </td>
+							  </tr>
+							  <tr>
+								  <td>3</td>
+								  <td>权限3</td>
+								  <td>权限3内容描述</td>
+								  <td>
+									  <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#Permission_Edit">编辑</button>
+									  &nbsp;<button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+								  </td>
+							  </tr>
+							  <tr>
+								  <td>4</td>
+								  <td>权限4</td>
+								  <td>权限4内容描述</td>
+								  <td>
+									  <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#Permission_Edit">编辑</button>
+									  &nbsp;<button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+								  </td>
+							  </tr>
+							  <tr>
+								  <td>5</td>
+								  <td>权限5</td>
+								  <td>权限5内容描述</td>
+								  <td>
+									  <button type="button" class="btn btn-outline-success btn-sm" data-toggle="modal" data-target="#Permission_Edit">编辑</button>
+									  &nbsp;<button type="button" class="btn btn-outline-danger btn-sm">删除</button>
+								  </td>
+							  </tr>
+						  </tbody>
+						</table>
+						
+						<!-- 分页模块nav -->
+						<div style="float: right;margin-right: 50px;" id="crud"> 
+							<nav aria-label="Page navigation example">
+							  <ul class="pagination">
+								<li class="page-item">
+								  <a class="page-link" href="#" aria-label="Previous">
+									<span aria-hidden="true">&laquo;</span>
+								  </a>
+								</li>
+								<li class="page-item"><a class="page-link" href="#">1</a></li>
+								<li class="page-item"><a class="page-link" href="#">2</a></li>
+								<li class="page-item"><a class="page-link" href="#">3</a></li>
+								<li class="page-item">
+								  <a class="page-link" href="#" aria-label="Next">
+									<span aria-hidden="true">&raquo;</span>
+								  </a>
+								</li>
+							  </ul>
+							</nav>
+						</div>		
+			</div>
+		</div> 
+		</main>
+	
+    
+  </div>
+</div>
+	
+	<!-- 用户列表编辑Modal -->
+	<div class="modal fade" id="User_Edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h6 class="modal-title" id="exampleModalLabel">序号1001</h6>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form>
+	          <div class="form-group">
+	            <label for="exampleInputEmail1">用户名:</label>
+	            <input type="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp">
+	          </div>
+			  
+			  
+			   <div class="form-group">
+			      <label for="exampleFormControlSelect1">用户角色:</label>
+			      <select class="form-control form-control-sm" id="exampleFormControlSelect1">
+			        <option>角色1</option>
+			        <option>角色2</option>
+					<option>角色3</option>
+					<option>角色4</option>
+			      </select>
+			    </div>
+	          
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">保存修改</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 添加用户Modal -->
+	<div class="modal fade" id="User_Add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h6 class="modal-title" id="exampleModalLabel">添加用户</h6>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form>
+	          <div class="form-group">
+	            <label for="exampleInputEmail1">用户名:</label>
+	            <input type="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp">
+	          </div>
+			  
+			  <div class="form-check">
+			    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
+			    <label class="form-check-label" for="exampleRadios1">
+			      男
+			    </label>
+				<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" style="margin-left: 40px;">
+				<label class="form-check-label" for="exampleRadios1" style="margin-left: 60px;">
+				  女
+				</label>
+			  </div>
+			  
+			  <div class="form-group" style="margin-top: 15px;">
+			    <label for="exampleInputEmail1">出生日期:</label>
+			    <input type="email" placeholder="2020/01/01" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp">
+			  </div>
+			  
+			   <div class="form-group ">
+			      <label for="exampleFormControlSelect1">用户角色:</label>
+			      <select class="form-control form-control-sm" id="exampleFormControlSelect1">
+					<option>---选择---</option>
+			        <option>角色1</option>
+			        <option>角色2</option>
+					<option>角色3</option>
+					<option>角色4</option>
+			      </select>
+			    </div>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 用户分配角色Modal-->
+	<div class="modal fade" id="User_Assign_Role" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h6 class="modal-title" id="exampleModalLabel">序号1001</h6>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form>
+			   <div class="form-group">
+			      <label for="exampleFormControlSelect1">用户角色:</label>
+			      <select class="form-control form-control-sm" id="exampleFormControlSelect1">
+			        <option>角色1</option>
+			        <option>角色2</option>
+					<option>角色3</option>
+					<option>角色4</option>
+			      </select>
+			    </div>
+	          
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">保存修改</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 角色列表编辑Modal -->
+	<div class="modal fade" id="Role_Edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h6 class="modal-title" id="exampleModalLabel">ID:1</h6>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form>
+	          <div class="form-group">
+	            <label for="exampleInputEmail1">角色名称:</label>
+	            <input type="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp">
+	          </div>
+			  
+			  
+			   <div class="form-group">
+			      <label for="exampleFormControlSelect1">角色权限:</label>
+			      <select class="form-control form-control-sm" id="exampleFormControlSelect1">
+			        <option>权限1</option>
+			        <option>权限2</option>
+					<option>权限3</option>
+					<option>权限4</option>
+			      </select>
+			    </div>
+				<div class="form-group">
+				    <label for="exampleFormControlTextarea1">备注</label>
+				    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+				  </div>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">保存修改</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
+	<!-- 添加角色Modal -->
+	<div class="modal fade" id="Role_Add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h6 class="modal-title" id="exampleModalLabel">添加角色</h6>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form>
+	          <div class="form-group">
+	            <label for="exampleInputEmail1">角色名称:</label>
+	            <input type="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp">
+	          </div>
+			  
+			   <div class="form-group ">
+			      <label for="exampleFormControlSelect1">角色权限:</label>
+			      <select class="form-control form-control-sm" id="exampleFormControlSelect1">
+					<option>---选择---</option>
+			        <option>权限1</option>
+			        <option>权限2</option>
+					<option>权限3</option>
+					<option>权限4</option>
+			      </select>
+			    </div>
+				
+				 <div class="form-group">
+				    <label for="exampleFormControlTextarea1">备注</label>
+				    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+				  </div>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+    
+	<!-- 用户列表修改权限Modal -->
+	<div class="modal fade" id="Role_Modify_Permissions" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h6 class="modal-title" id="exampleModalLabel">ID:1</h6>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form>
+			   <div class="form-group">
+			      <label for="exampleFormControlSelect1">角色权限:</label>
+			      <select class="form-control form-control-sm" id="exampleFormControlSelect1">
+			        <option>权限1</option>
+			        <option>权限2</option>
+					<option>权限3</option>
+					<option>权限4</option>
+			      </select>
+			    </div>
+	          
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">保存修改</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 权限列表编辑Modal -->
+	<div class="modal fade" id="Permission_Edit" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h6 class="modal-title" id="exampleModalLabel">ID:1</h6>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form>
+	          <div class="form-group">
+	            <label for="exampleInputEmail1">权限名称:</label>
+	            <input type="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp">
+	          </div>
+			 
+			  <div class="form-group">
+			     <label for="exampleFormControlTextarea1">权限描述</label>
+			     <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+			   </div>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">保存修改</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+	<!-- 添加权限Modal -->
+	<div class="modal fade" id="Permission_Add" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="modal-dialog modal-dialog-centered">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h6 class="modal-title" id="exampleModalLabel">添加权限</h6>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+	      <div class="modal-body">
+	        <form>
+	          <div class="form-group">
+	            <label for="exampleInputEmail1">权限名称:</label>
+	            <input type="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp">
+	          </div>
+			 <div class="form-group">
+				<label for="exampleFormControlTextarea1">权限描述</label>
+				<textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+			  </div>
+	        </form>
+	      </div>
+	      <div class="modal-footer">
+	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
+	        <button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+	
+      <script>window.jQuery || document.write('<script src="../assets/js/vendor/jquery.slim.min.js"><\/script>')</script><script src="../assets/dist/js/bootstrap.bundle.min.js"></script>
+
+      
+        <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.4/dist/Chart.min.js"></script>
+        <script src="dashboard.js"></script>
+  </body>
+</html>
