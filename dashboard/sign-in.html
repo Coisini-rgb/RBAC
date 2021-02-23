@@ -104,21 +104,21 @@
 		 */
 		var CountDown=15;
 		var daojishi;
-		function TimeCountDown(){
+		function TimeCountDown(id){
 			if(CountDown==0){
-				Send_Code.removeAttribute("disabled");
-				Send_Code.innerText="发送";
+				id.removeAttribute("disabled");
+				id.innerText="发送";
 				clearInterval(daojishi);
 				CountDown=15;
 			}else{
 				console.log(CountDown);
-				Send_Code.setAttribute("disabled","disabled");
-				Send_Code.innerText=CountDown+"S";
+				id.setAttribute("disabled","disabled");
+				id.innerText=CountDown+"S";
 				CountDown--;
 			}
 		};
-		function SendCode(){
-			daojishi=setInterval("TimeCountDown()",1000);
+		function SendCode(id){
+			daojishi=setInterval("TimeCountDown("+id+")",1000);
 		};
 		
 		/**
@@ -127,7 +127,7 @@
 		 */
 		
 		function PwdOrCodeCheck(id){
-			var Pwd=/^[a-zA-Z0-9_-]{4,16}$/;//4到16位（字母，数字，下划线，减号)例如:iFat-7
+			var Pwd=/^[a-zA-Z0-9_-]{4,16}$/;//4到16位（字母，数字，下划线，减号)例如:FRPfirst-7
 			var Code=/^\d{4}$/;
 			console.log(document.getElementById("Pwd").value);
 			
@@ -137,6 +137,11 @@
 					if(!Pwd.test(document.getElementById("Pwd").value)){
 						alert("密码格式不规范");
 						document.getElementById("Pwd").value="";
+						return false;
+					}
+					if(!Code.test(document.getElementById("Pwd_Code").value)){
+						alert("验证码格式不规范");
+						document.getElementById("Pwd_Code").value="";
 						return false;
 					}
 				break;
@@ -168,14 +173,22 @@
 			
 			<label class="sr-only">Password</label>
 			<input type="password" class="form-control" placeholder="密码" value="" id="Pwd" required="" style="margin-top: 25px;">
-			<div class="checkbox mb-3">
-				<span class="text-primary" style="float: right;padding-bottom: 10px;" onclick="ChangeToCode()">短信登陆</span>
+			<label class="sr-only">验证码</label>
+			
+			<div class="input-group mb-3" style="margin-top: 25px;">
+			  <input type="text" class="form-control" placeholder="验证码" id="Pwd_Code" value=""  aria-label="Recipient's username" aria-describedby="button-addon2">
+			  <div class="input-group-append">
+			    <button class="btn btn-outline-secondary" style="width: 58px;height: 46px;" type="button" id="Pwd_Send_Code" onclick="SendCode('Pwd_Send_Code')">发送</button>
+			  </div>
 			</div>
+			<!-- <div class="checkbox mb-3">
+				<span class="text-primary" style="float: right;padding-bottom: 10px;" onclick="ChangeToCode()">短信登陆</span>
+			</div> -->
 			<!-- <a href="dashboard.html" style="text-decoration:none;"> --><button class="btn btn-lg btn-primary btn-block" type="submit" >登陆</button><!-- </a>	 -->
 		</form>
 		
 		
-		<form class="form-signin" action="dashboard.html" id="form2" style="display: none;" onsubmit="return PwdOrCodeCheck('Code')">
+		<!-- <form class="form-signin" action="dashboard.html" id="form2" style="display: none;" onsubmit="return PwdOrCodeCheck('Code')">
 			<img class="mb-4" src="../assets/brand/bootstrap-solid.svg" alt="" width="72" height="72">
 			<h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
 			<label class="sr-only">Phone Number</label>
@@ -186,14 +199,14 @@
 			<div class="input-group mb-3" style="margin-top: 25px;">
 			  <input type="text" class="form-control" placeholder="验证码" id="Code" value=""  aria-label="Recipient's username" aria-describedby="button-addon2">
 			  <div class="input-group-append">
-			    <button class="btn btn-outline-secondary" style="width: 58px;height: 46px;" type="button" id="Send_Code" onclick="SendCode()">发送</button>
+			    <button class="btn btn-outline-secondary" style="width: 58px;height: 46px;" type="button" id="Code_Send_Code" onclick="SendCode('Code_Send_Code')">发送</button>
 			  </div>
 			</div>
 			<div class="checkbox mb-3">
 				<span class="text-primary" style="float: right;padding-bottom: 10px;" onclick="ChangeToPwd()">密码登陆</span>
 			</div>
 			<a href="dashboard.html" style="text-decoration:none;"><button class="btn btn-lg btn-primary btn-block" type="submit">登陆</button></a>	
-		</form>
+		</form> -->
 
 	</body>
 
