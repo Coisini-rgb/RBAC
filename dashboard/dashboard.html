@@ -80,7 +80,95 @@
 			document.getElementById("Role").style.display="none";
 			document.getElementById("Permission_Title").innerText="权限列表";
 			document.getElementById("Permission").style.display="";
+		};
+		
+		function EditModalUserNameCheck(){
+			
+			var ModalUserName = Edit_Modal_UserName.value;
+			var name=/^[a-zA-Z0-9_-]{4,16}$/; //用户名正则，4到16位（字母，数字，下划线，减号）
+			if(!name.test(ModalUserName)){
+				alert("用户名需得是由4到16位（字母，数字，下划线，减号）组成！");
+			}else{
+				$("#User_Edit").modal('hide');
+				alert("修改成功！");
+			}
+		};
+		
+		function AddUserModalCheck(){
+			var ModalUserName=Add_Modal_UserName.value;
+			var name=/^[a-zA-Z0-9_-]{4,16}$/; //用户名正则，4到16位（字母，数字，下划线，减号）
+			var data=/^\d{4}\-\d{2}\-\d{2}$/;
+			var sex=$('input:radio[name="sex"]:checked').val();
+			if(!name.test(ModalUserName)){
+				alert("用户名需得是由4到16位（字母，数字，下划线，减号）组成！");
+			}else if(sex==null){
+				alert("性别不能不选!");
+			}
+			else if(!data.test(Add_Modal_Data.value)){
+				alert("日期格式为yyyy-MM-dd");
+			}else if(SelectRole.value==""){
+				alert("请选择用户角色！");
+			}
+			else{
+				$("#User_Add").modal('hide');
+				alert("用户添加成功！");
+			}
+		};
+		
+		
+		function RoleEdit(){
+			var ModalRoleName=Modal_Role_Name.value;
+			var name=/^[a-zA-Z0-9_-]{4,16}$/; //用户名正则，4到16位（字母，数字，下划线，减号）
+			console.log(document.getElementById("Modal_Role_Name").value)
+			if(!name.test(ModalRoleName)){
+				alert("角色名称需得是由4到16位（字母，数字，下划线，减号）组成！");
+			}else{
+				$("#Role_Edit").modal('hide');
+				alert("角色信息编辑成功！");
+			}
+			
+		};
+		
+		function RoleAdd(){
+			var ModalAddRoleName=Modal_Add_RoleName.value;
+			var name=/^[a-zA-Z0-9_-]{4,16}$/; //用户名正则，4到16位（字母，数字，下划线，减号）
+			var select=Modal_Add_RoleSelect.value;
+			if(!name.test(ModalAddRoleName)){
+				alert("角色名称需得是由4到16位（字母，数字，下划线，减号）组成！");
+			}else if(select==""){
+				alert("请选择角色权限！");
+			}else{
+				$("#Role_Add").modal('hide');
+				alert("角色添加成功！");
+			}
+		};
+		
+		function PermissionEdit(){
+			var Permissionname=PermissionName.value;
+			var name=/^[a-zA-Z0-9_-]{4,16}$/; //用户名正则，4到16位（字母，数字，下划线，减号）
+			if(!name.test(Permissionname)){
+				alert("权限名称需得是由4到16位（字母，数字，下划线，减号）组成！");
+			}else{
+				$("#Permission_Edit").modal('hide');
+				alert("权限信息修改成功！");
+			}
+		};
+		
+		function Permission_Add_Check(){
+			var Permission_Add_permissionName=Permission_Add_PermissionName.value;
+			var name=/^[a-zA-Z0-9_-]{4,16}$/; //用户名正则，4到16位（字母，数字，下划线，减号）
+			if(!name.test(Permission_Add_permissionName)){
+				alert("权限名称需得是由4到16位（字母，数字，下划线，减号）组成！");
+			}else if(PermissionDescript.value==""){
+				alert("权限描述不能为空！");
+			}else{
+				$("#Permission_Add").modal('hide');
+				alert("权限添加成功！");
+			}
 		}
+		
+		
+		
 		
 	</script>
   </head>
@@ -529,12 +617,10 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        <form>
 	          <div class="form-group">
-	            <label for="exampleInputEmail1">用户名:</label>
-	            <input type="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp">
+	            <label for="Edit_Modal_UserName">用户名:</label>
+	            <input type="text"  value="" class="form-control form-control-sm" id="Edit_Modal_UserName">
 	          </div>
-			  
 			  
 			   <div class="form-group">
 			      <label for="exampleFormControlSelect1">用户角色:</label>
@@ -545,12 +631,10 @@
 					<option>角色4</option>
 			      </select>
 			    </div>
-	          
-	        </form>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-	        <button type="button" class="btn btn-primary" data-dismiss="modal">保存修改</button>
+	        <button type="button" class="btn btn-primary" data-dismiss="" onclick="EditModalUserNameCheck()">保存修改</button>
 	      </div>
 	    </div>
 	  </div>
@@ -567,43 +651,41 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        <form>
 	          <div class="form-group">
-	            <label for="exampleInputEmail1">用户名:</label>
-	            <input type="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp">
+	            <label for="Add_Modal_UserName">用户名:</label>
+	            <input type="email" class="form-control form-control-sm" id="Add_Modal_UserName" aria-describedby="emailHelp">
 	          </div>
 			  
 			  <div class="form-check">
-			    <input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1">
-			    <label class="form-check-label" for="exampleRadios1">
+			    <input class="form-check-input" type="radio" name="sex" id="sexMan" value="option1">
+			    <label class="form-check-label" for="sexMan">
 			      男
 			    </label>
-				<input class="form-check-input" type="radio" name="exampleRadios" id="exampleRadios1" value="option1" style="margin-left: 40px;">
-				<label class="form-check-label" for="exampleRadios1" style="margin-left: 60px;">
+				<input class="form-check-input" type="radio" name="sex" id="sexWoman" value="option1" style="margin-left: 40px;">
+				<label class="form-check-label" for="sexWoman" style="margin-left: 60px;">
 				  女
 				</label>
 			  </div>
 			  
 			  <div class="form-group" style="margin-top: 15px;">
-			    <label for="exampleInputEmail1">出生日期:</label>
-			    <input type="email" placeholder="2020/01/01" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp">
+			    <label for="Add_Modal_Data">出生日期:</label>
+			    <input type="email" placeholder="2020-01-01" class="form-control form-control-sm" id="Add_Modal_Data" aria-describedby="emailHelp">
 			  </div>
 			  
 			   <div class="form-group ">
-			      <label for="exampleFormControlSelect1">用户角色:</label>
-			      <select class="form-control form-control-sm" id="exampleFormControlSelect1">
-					<option>---选择---</option>
-			        <option>角色1</option>
-			        <option>角色2</option>
-					<option>角色3</option>
-					<option>角色4</option>
+			      <label for="SelectRole">用户角色:</label>
+			      <select class="form-control form-control-sm" id="SelectRole">
+					<option value="">---选择---</option>
+			        <option value="1">角色1</option>
+			        <option value="2">角色2</option>
+					<option value="3">角色3</option>
+					<option value="4">角色4</option>
 			      </select>
 			    </div>
-	        </form>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-	        <button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+	        <button type="button" class="btn btn-primary" onclick="AddUserModalCheck()">保存</button>
 	      </div>
 	    </div>
 	  </div>
@@ -620,7 +702,6 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        <form>
 			   <div class="form-group">
 			      <label for="exampleFormControlSelect1">用户角色:</label>
 			      <select class="form-control form-control-sm" id="exampleFormControlSelect1">
@@ -630,8 +711,6 @@
 					<option>角色4</option>
 			      </select>
 			    </div>
-	          
-	        </form>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
@@ -652,10 +731,9 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        <form>
 	          <div class="form-group">
-	            <label for="exampleInputEmail1">角色名称:</label>
-	            <input type="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp">
+	            <label for="Modal_Role_Name">角色名称:</label>
+	            <input type="text" class="form-control form-control-sm" id="Modal_Role_Name" value="">
 	          </div>
 			  
 			  
@@ -672,11 +750,10 @@
 				    <label for="exampleFormControlTextarea1">备注</label>
 				    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
 				  </div>
-	        </form>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-	        <button type="button" class="btn btn-primary" data-dismiss="modal">保存修改</button>
+	        <button type="button" class="btn btn-primary" onclick="RoleEdit()">保存修改</button>
 	      </div>
 	    </div>
 	  </div>
@@ -693,20 +770,19 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        <form>
 	          <div class="form-group">
-	            <label for="exampleInputEmail1">角色名称:</label>
-	            <input type="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp">
+	            <label for="Modal_Add_RoleName">角色名称:</label>
+	            <input type="text" class="form-control form-control-sm" id="Modal_Add_RoleName">
 	          </div>
 			  
 			   <div class="form-group ">
-			      <label for="exampleFormControlSelect1">角色权限:</label>
-			      <select class="form-control form-control-sm" id="exampleFormControlSelect1">
-					<option>---选择---</option>
-			        <option>权限1</option>
-			        <option>权限2</option>
-					<option>权限3</option>
-					<option>权限4</option>
+			      <label for="Modal_Add_RoleSelect">角色权限:</label>
+			      <select class="form-control form-control-sm" id="Modal_Add_RoleSelect">
+					<option value="">---选择---</option>
+			        <option value="1">权限1</option>
+			        <option value="2">权限2</option>
+					<option value="3">权限3</option>
+					<option value="4">权限4</option>
 			      </select>
 			    </div>
 				
@@ -714,11 +790,10 @@
 				    <label for="exampleFormControlTextarea1">备注</label>
 				    <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
 				  </div>
-	        </form>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-	        <button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+	        <button type="button" class="btn btn-primary" onclick="RoleAdd()">保存</button>
 	      </div>
 	    </div>
 	  </div>
@@ -735,7 +810,6 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        <form>
 			   <div class="form-group">
 			      <label for="exampleFormControlSelect1">角色权限:</label>
 			      <select class="form-control form-control-sm" id="exampleFormControlSelect1">
@@ -745,8 +819,6 @@
 					<option>权限4</option>
 			      </select>
 			    </div>
-	          
-	        </form>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
@@ -767,21 +839,19 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        <form>
 	          <div class="form-group">
-	            <label for="exampleInputEmail1">权限名称:</label>
-	            <input type="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp">
+	            <label for="PermissionName">权限名称:</label>
+	            <input type="text" class="form-control form-control-sm" id="PermissionName" value="">
 	          </div>
 			 
 			  <div class="form-group">
 			     <label for="exampleFormControlTextarea1">权限描述</label>
 			     <textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
 			   </div>
-	        </form>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-	        <button type="button" class="btn btn-primary" data-dismiss="modal">保存修改</button>
+	        <button type="button" class="btn btn-primary" onclick="PermissionEdit()">保存修改</button>
 	      </div>
 	    </div>
 	  </div>
@@ -798,20 +868,18 @@
 	        </button>
 	      </div>
 	      <div class="modal-body">
-	        <form>
 	          <div class="form-group">
-	            <label for="exampleInputEmail1">权限名称:</label>
-	            <input type="email" class="form-control form-control-sm" id="exampleInputEmail1" aria-describedby="emailHelp">
+	            <label for="Permission_Add_PermissionName">权限名称:</label>
+	            <input type="text" class="form-control form-control-sm" id="Permission_Add_PermissionName">
 	          </div>
 			 <div class="form-group">
-				<label for="exampleFormControlTextarea1">权限描述</label>
-				<textarea class="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+				<label for="PermissionDescript">权限描述</label>
+				<textarea class="form-control" id="PermissionDescript" rows="2"></textarea>
 			  </div>
-	        </form>
 	      </div>
 	      <div class="modal-footer">
 	        <button type="button" class="btn btn-secondary" data-dismiss="modal">关闭</button>
-	        <button type="button" class="btn btn-primary" data-dismiss="modal">保存</button>
+	        <button type="button" class="btn btn-primary" onclick="Permission_Add_Check()">保存</button>
 	      </div>
 	    </div>
 	  </div>
